@@ -8,11 +8,10 @@ public class LoanCalcRepository {
     private static int requestId;
 
     /**
-     * Procedure for save requestId
+     * Процедура для сохранения id заявки
      * @return - Request ID
      */
     public static int save() {
-        int result = ++requestId;
-        return result;
+        return requestId++;
     }
 }

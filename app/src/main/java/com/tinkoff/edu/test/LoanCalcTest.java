@@ -8,7 +8,7 @@ import com.tinkoff.edu.app.LoanCalcController;
 public class LoanCalcTest {
 
     public static void main(String... args) {
-        for (int responseId = 1; responseId <= 10; responseId++) {
+        for (int responseId = 0; responseId < 10; responseId++) {
 
             int requestId = LoanCalcController.createRequest();
             if (requestId == responseId) {
