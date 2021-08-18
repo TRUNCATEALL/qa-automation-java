@@ -5,8 +5,8 @@ package com.tinkoff.edu.app;
  */
 public class LoanCalcController {
 
-    public static int createRequest() {
+    public LoanResponse createRequest(LoanRequest loanRequest) {
         LoanCalcLogger.log();
-        return LoanCalcService.createRequest();
+        return new LoanCalcService().createRequest(loanRequest);
     }
 }
