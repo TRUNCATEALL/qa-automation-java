@@ -18,8 +18,8 @@ public class LoanCalcTest {
             LoanRequest loanRequestModel = new LoanRequest(12, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
             LoanResponse loanResponse = new LoanCalcController().createRequest(loanRequestModel);
 
-            System.out.println("--- [ Request params ] ---\n" + loanRequestModel.requestOut());
-            System.out.println("--- [ Response ] ---\n" + loanResponse.responseOut());
+            System.out.println("--- [ Request params ] ---\n" + loanRequestModel);
+            System.out.println("--- [ Response ] ---\n" + loanResponse);
             System.out.println("--- [ Test ] ---");
 
             if (loanResponse.getRequestId() == responseId) {

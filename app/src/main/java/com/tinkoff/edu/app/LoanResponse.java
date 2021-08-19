@@ -28,7 +28,7 @@ public class LoanResponse {
         return responseStatus;
     }
 
-    public String responseOut() {
-        return "requestId: " + this.requestId + "\nrequest: " + this.loanRequest.requestOut() + "\nresponseStatus: " + this.responseStatus;
+    public String toString() {
+        return "requestId: " + this.requestId + "\nrequest: " + this.loanRequest + "\nresponseStatus: " + this.responseStatus;
     }
 }

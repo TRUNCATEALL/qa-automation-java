@@ -25,7 +25,7 @@ public class LoanRequest {
         return amount;
     }
 
-    public String requestOut() {
+    public String toString() {
         return "months: " + getMonths() + ", amount: " + getAmount() + ", clientType: " + getClientType();
     }
 }

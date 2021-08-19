@@ -4,9 +4,14 @@ package com.tinkoff.edu.app;
  * Loan API
  */
 public class LoanCalcController {
+    private final LoanCalcService loanCalcService;
+
+    public LoanCalcController() {
+        loanCalcService = new LoanCalcService();
+    }
 
     public LoanResponse createRequest(LoanRequest loanRequest) {
         LoanCalcLogger.log();
-        return new LoanCalcService().createRequest(loanRequest);
+        return loanCalcService.createRequest(loanRequest);
     }
 }

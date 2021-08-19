@@ -6,6 +6,11 @@ import java.math.BigDecimal;
  * Loan calculation
  */
 public class LoanCalcService {
+    private final LoanCalcRepository loanCalcRepository;
+
+    public LoanCalcService() {
+        loanCalcRepository = new LoanCalcRepository();
+    }
 
     public LoanResponse createRequest(LoanRequest loanRequest) {
         BigDecimal maxAmount = new BigDecimal(100000);
@@ -18,6 +23,6 @@ public class LoanCalcService {
             loanResponse = LoanResponseStatusType.ERROR;
         }
 
-        return new LoanCalcRepository().save(loanRequest, loanResponse);
+        return loanCalcRepository.save(loanRequest, loanResponse);
     }
 }
