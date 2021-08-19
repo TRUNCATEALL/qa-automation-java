@@ -14,14 +14,12 @@ public class LoanCalcTest {
 
         for (int responseId = 0; responseId < 10; responseId++) {
 
-            int amount = Utils.randomIndexFromArray(amountValues);
+            int amount = Utils.randomValueFromArray(amountValues);
             LoanRequest loanRequestModel = new LoanRequest(12, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
             LoanResponse loanResponse = new LoanCalcController().createRequest(loanRequestModel);
 
-            System.out.println("--- [ Request params ] ---");
-            System.out.println(loanRequestModel.requestOut());
-            System.out.println("--- [ Response ] ---");
-            System.out.println(loanResponse.responseOut());
+            System.out.println("--- [ Request params ] ---\n" + loanRequestModel.requestOut());
+            System.out.println("--- [ Response ] ---\n" + loanResponse.responseOut());
             System.out.println("--- [ Test ] ---");
 
             if (loanResponse.getRequestId() == responseId) {

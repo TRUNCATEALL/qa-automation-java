@@ -15,7 +15,7 @@ public class Utils {
         return clazz.getEnumConstants()[x];
     }
 
-    public static int randomIndexFromArray(int[] vArray) {
+    public static int randomValueFromArray(int[] vArray) {
         Random rn = new Random();
         return vArray[rn.nextInt(vArray.length)];
     }
