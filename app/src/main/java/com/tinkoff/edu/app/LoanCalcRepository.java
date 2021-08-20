@@ -5,13 +5,14 @@ package com.tinkoff.edu.app;
  */
 public class LoanCalcRepository {
 
-    private static int requestId;
-
     /**
      * Процедура для сохранения id заявки
-     * @return - Request ID
+     *
+     * @param loanRequest - параметры заявки
+     * @param loanResponseStatusType - решение по заявке
+     * @return - LoanResponse - набор параметров (номер заявки + сама заявка + результат рассмотрения)
      */
-    public static int save() {
-        return requestId++;
+    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatusType loanResponseStatusType) {
+        return new LoanResponse(loanRequest, loanResponseStatusType);
     }
 }
