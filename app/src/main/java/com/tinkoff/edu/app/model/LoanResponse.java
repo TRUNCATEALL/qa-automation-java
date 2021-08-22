@@ -1,4 +1,6 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.model;
+
+import com.tinkoff.edu.app.dictionary.LoanResponseStatusType;
 
 import static com.tinkoff.edu.app.Utils.requestCounter;
 

@@ -16,8 +16,8 @@ public class Utils {
     }
 
     public static int randomValueFromArray(int[] vArray) {
-        Random rn = new Random();
-        return vArray[rn.nextInt(vArray.length)];
+        int rn = new Random().nextInt(vArray.length);
+        return vArray[rn];
     }
 
     public static int requestCounter() {
