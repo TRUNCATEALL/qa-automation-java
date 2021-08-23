@@ -1,15 +1,21 @@
-package com.tinkoff.edu.app;
+package com.tinkoff.edu.app.service;
+
+import com.tinkoff.edu.app.dictionary.ClientType;
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
+import com.tinkoff.edu.app.dictionary.LoanResponseStatusType;
+import com.tinkoff.edu.app.repository.LoanCalcRepository;
 
 import java.math.BigDecimal;
 
 /**
  * Loan calculation
  */
-public class LoanCalcService {
+public class SimpleLoanCalcService implements LoanCalcService {
     private final LoanCalcRepository loanCalcRepository;
 
-    public LoanCalcService() {
-        loanCalcRepository = new LoanCalcRepository();
+    public SimpleLoanCalcService(LoanCalcRepository loanCalcRepository) {
+        this.loanCalcRepository = loanCalcRepository;
     }
 
     public LoanResponse createRequest(LoanRequest loanRequest) {

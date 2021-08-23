@@ -1,6 +1,13 @@
 package com.tinkoff.edu.test;
 
 import com.tinkoff.edu.app.*;
+import com.tinkoff.edu.app.controller.LoanCalcController;
+import com.tinkoff.edu.app.dictionary.ClientType;
+import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
+import com.tinkoff.edu.app.repository.SimpleCalcRepository;
+import com.tinkoff.edu.app.service.LoanCalcService;
+import com.tinkoff.edu.app.service.SimpleLoanCalcService;
 
 import java.math.BigDecimal;
 
@@ -16,7 +23,8 @@ public class LoanCalcTest {
 
             int amount = Utils.randomValueFromArray(amountValues);
             LoanRequest loanRequestModel = new LoanRequest(12, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
-            LoanResponse loanResponse = new LoanCalcController().createRequest(loanRequestModel);
+            LoanCalcService loanCalcService = new SimpleLoanCalcService(new SimpleCalcRepository());
+            LoanResponse loanResponse = new LoanCalcController(loanCalcService).createRequest(loanRequestModel);
 
             System.out.println("--- [ Request params ] ---\n" + loanRequestModel);
             System.out.println("--- [ Response ] ---\n" + loanResponse);
