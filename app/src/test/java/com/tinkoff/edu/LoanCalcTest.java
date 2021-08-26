@@ -35,19 +35,19 @@ public class LoanCalcTest {
 
     @Test
     public void shouldGetId1WhenFirstCall() {
-        LoanRequest loanRequestModel = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
+        LoanRequest loanRequest = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
 
-        int requestId = loanCalcController.createRequest(loanRequestModel).getRequestId();
+        int requestId = loanCalcController.createRequest(loanRequest).getRequestId();
 
         Assertions.assertEquals(1, requestId);
     }
 
     @Test
     public void shouldGetIncrementedIdWhenAnyCall() {
-        LoanRequest loanRequestModel = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
+        LoanRequest loanRequest = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
 
-        int currentRequestId = loanCalcController.createRequest(loanRequestModel).getRequestId();
-        int actualRequestId = loanCalcController.createRequest(loanRequestModel).getRequestId();
+        int currentRequestId = loanCalcController.createRequest(loanRequest).getRequestId();
+        int actualRequestId = loanCalcController.createRequest(loanRequest).getRequestId();
 
         Assertions.assertEquals(currentRequestId + 1, actualRequestId);
     }
