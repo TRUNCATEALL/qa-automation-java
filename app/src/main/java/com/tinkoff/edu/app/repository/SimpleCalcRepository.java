@@ -8,15 +8,7 @@ import com.tinkoff.edu.app.model.LoanResponse;
  * Loan repository
  */
 public class SimpleCalcRepository implements LoanCalcRepository {
-    private static int requestId;
-
-    public static int getRequestId() {
-        return requestId;
-    }
-
-    public static void setRequestId(int requestId) {
-        SimpleCalcRepository.requestId = requestId;
-    }
+    private int requestId;
 
     /**
      * Процедура для сохранения id заявки
