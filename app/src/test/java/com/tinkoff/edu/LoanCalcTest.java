@@ -18,9 +18,6 @@ import java.math.BigDecimal;
  * Loan Calc Tests
  */
 public class LoanCalcTest {
-    private LoanRequest loanRequestModel;
-    private LoanCalcService loanCalcService;
-    private LoanCalcRepository loanCalcRepository;
     private LoanCalcController loanCalcController;
     private int months;
     private int amount;
@@ -30,14 +27,15 @@ public class LoanCalcTest {
         int[] amountValues = {666, 100000, 100001};
         amount = Utils.randomValueFromArray(amountValues);
         months = Utils.randomInt(1, 12);
+
+        LoanCalcRepository loanCalcRepository = new SimpleCalcRepository();
+        LoanCalcService loanCalcService = new SimpleLoanCalcService(loanCalcRepository);
+        loanCalcController = new LoanCalcController(loanCalcService);
     }
 
     @Test
     public void shouldGetId1WhenFirstCall() {
-        loanCalcRepository = new SimpleCalcRepository();
-        loanCalcService = new SimpleLoanCalcService(loanCalcRepository);
-        loanRequestModel = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
-        loanCalcController = new LoanCalcController(loanCalcService);
+        LoanRequest loanRequestModel = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
 
         int requestId = loanCalcController.createRequest(loanRequestModel).getRequestId();
 
@@ -46,10 +44,7 @@ public class LoanCalcTest {
 
     @Test
     public void shouldGetIncrementedIdWhenAnyCall() {
-        loanCalcRepository = new SimpleCalcRepository();
-        loanCalcService = new SimpleLoanCalcService(loanCalcRepository);
-        loanRequestModel = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
-        loanCalcController = new LoanCalcController(loanCalcService);
+        LoanRequest loanRequestModel = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
 
         int currentRequestId = loanCalcController.createRequest(loanRequestModel).getRequestId();
         int actualRequestId = loanCalcController.createRequest(loanRequestModel).getRequestId();
