@@ -9,7 +9,7 @@ import com.tinkoff.edu.app.repository.SimpleCalcRepository;
 import com.tinkoff.edu.app.service.LoanCalcService;
 import com.tinkoff.edu.app.service.SimpleLoanCalcService;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -18,24 +18,25 @@ import java.math.BigDecimal;
  * Loan Calc Tests
  */
 public class LoanCalcTest {
-    private LoanCalcController loanCalcController;
-    private int months;
-    private int amount;
+    private static LoanCalcController loanCalcController;
 
-    @BeforeEach
-    public void generateRequest() {
-        int[] amountValues = {666, 100000, 100001};
-        amount = Utils.randomValueFromArray(amountValues);
-        months = Utils.randomInt(1, 12);
-
+    @BeforeAll
+    public static void generateRequest() {
         LoanCalcRepository loanCalcRepository = new SimpleCalcRepository();
         LoanCalcService loanCalcService = new SimpleLoanCalcService(loanCalcRepository);
         loanCalcController = new LoanCalcController(loanCalcService);
     }
 
+    private LoanRequest createRequest() {
+        int amount = Utils.randomInt(0, 10000);
+        int month = Utils.randomInt(1, 12);
+        return new LoanRequest(month, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
+    }
+
     @Test
     public void shouldGetId1WhenFirstCall() {
-        LoanRequest loanRequest = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
+        generateRequest();
+        LoanRequest loanRequest = new LoanRequest(12, BigDecimal.valueOf(10000), Utils.randomEnum(ClientType.class));
 
         int requestId = loanCalcController.createRequest(loanRequest).getRequestId();
 
@@ -44,7 +45,7 @@ public class LoanCalcTest {
 
     @Test
     public void shouldGetIncrementedIdWhenAnyCall() {
-        LoanRequest loanRequest = new LoanRequest(months, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
+        LoanRequest loanRequest = createRequest();
 
         int currentRequestId = loanCalcController.createRequest(loanRequest).getRequestId();
         int actualRequestId = loanCalcController.createRequest(loanRequest).getRequestId();
