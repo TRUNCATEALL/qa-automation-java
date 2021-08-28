@@ -36,7 +36,7 @@ public class LoanCalcTest {
     @Test
     public void shouldGetId1WhenFirstCall() {
         generateRequest();
-        LoanRequest loanRequest = new LoanRequest(12, BigDecimal.valueOf(10000), Utils.randomEnum(ClientType.class));
+        LoanRequest loanRequest = createRequest();
 
         int requestId = loanCalcController.createRequest(loanRequest).getRequestId();
 
