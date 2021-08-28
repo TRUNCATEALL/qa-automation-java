@@ -19,8 +19,4 @@ public class Utils {
         int rn = new Random().nextInt(vArray.length);
         return vArray[rn];
     }
-
-    public static int requestCounter() {
-        return requestId++;
-    }
 }
