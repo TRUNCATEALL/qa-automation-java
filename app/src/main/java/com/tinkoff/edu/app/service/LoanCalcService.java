@@ -7,6 +7,9 @@ import com.tinkoff.edu.app.model.LoanResponse;
 
 import java.math.BigDecimal;
 
+import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.APPROVED;
+import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.DECLINED;
+
 public interface LoanCalcService {
     LoanResponse createRequest(LoanRequest loanRequest);
 
@@ -24,24 +27,24 @@ public interface LoanCalcService {
     }
 
     default LoanResponseStatus getReqStatusForPerson(BigDecimal cornerAmount, BigDecimal amount, int months) {
-        LoanResponseStatus loanResponseStatus = LoanResponseStatus.DECLINED;
+        LoanResponseStatus loanResponseStatus = DECLINED;
 
         if (amount.compareTo(cornerAmount) <= 0 && months <= 12) {
-            loanResponseStatus = LoanResponseStatus.APPROVED;
+            loanResponseStatus = APPROVED;
         }
         return loanResponseStatus;
     }
 
     default LoanResponseStatus getReqStatusForOoo(BigDecimal cornerAmount, BigDecimal amount, int months) {
-        LoanResponseStatus loanResponseStatus = LoanResponseStatus.DECLINED;
+        LoanResponseStatus loanResponseStatus = DECLINED;
 
         if (amount.compareTo(cornerAmount) > 0 && months <= 12) {
-            loanResponseStatus = LoanResponseStatus.APPROVED;
+            loanResponseStatus = APPROVED;
         }
         return loanResponseStatus;
     }
 
     default LoanResponseStatus getReqStatusForIp() {
-        return LoanResponseStatus.DECLINED;
+        return DECLINED;
     }
 }
