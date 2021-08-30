@@ -27,21 +27,21 @@ public interface LoanCalcService {
     }
 
     default LoanResponseStatus getRespStatusForPerson(BigDecimal cornerAmount, BigDecimal amount, int months) {
-        LoanResponseStatus loanResponseStatus = DECLINED;
 
         if (amount.compareTo(cornerAmount) <= 0 && months <= 12) {
-            loanResponseStatus = APPROVED;
+            return APPROVED;
+        } else {
+            return DECLINED;
         }
-        return loanResponseStatus;
     }
 
     default LoanResponseStatus getRespStatusForOoo(BigDecimal cornerAmount, BigDecimal amount, int months) {
-        LoanResponseStatus loanResponseStatus = DECLINED;
 
         if (amount.compareTo(cornerAmount) > 0 && months <= 12) {
-            loanResponseStatus = APPROVED;
+            return APPROVED;
+        } else {
+            return DECLINED;
         }
-        return loanResponseStatus;
     }
 
     default LoanResponseStatus getRespStatusForIp() {

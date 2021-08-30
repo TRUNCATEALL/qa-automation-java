@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
+import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.APPROVED;
+import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.DECLINED;
+
 /**
  * Loan Calc Tests
  */
@@ -33,6 +36,14 @@ public class LoanCalcTest {
         int amount = Utils.randomInt(0, 10000);
         int month = Utils.randomInt(1, 12);
         return new LoanRequest(month, BigDecimal.valueOf(amount), Utils.randomEnum(ClientType.class));
+    }
+
+    private void assertApproved(LoanResponseStatus status) {
+        Assertions.assertEquals(status, APPROVED, "Заявка должна быть одобрена");
+    }
+
+    private void assertDeclied(LoanResponseStatus status) {
+        Assertions.assertEquals(status, DECLINED, "Заявка не должна быть одобрена");
     }
 
     @Test
@@ -90,7 +101,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(13, BigDecimal.valueOf(10001), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+        assertDeclied(loanResponseStatus);
     }
 
     @Test
@@ -98,7 +109,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(10001), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+        assertDeclied(loanResponseStatus);
     }
 
     @Test
@@ -106,7 +117,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(13, BigDecimal.valueOf(9999), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+        assertDeclied(loanResponseStatus);
     }
 
     @Test
@@ -114,7 +125,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(9999), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.APPROVED, "Заявка должна быть одобрена");
+        assertApproved(loanResponseStatus);
     }
 
     @Test
@@ -122,7 +133,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(14, BigDecimal.valueOf(10001), ClientType.OOO);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+        assertDeclied(loanResponseStatus);
     }
 
     @Test
@@ -130,7 +141,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(10001), ClientType.OOO);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.APPROVED, "Заявка должна быть одобрена");
+        assertApproved(loanResponseStatus);
     }
 
     @Test
@@ -138,7 +149,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(14, BigDecimal.valueOf(9999), ClientType.OOO);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+        assertDeclied(loanResponseStatus);
     }
 
     @Test
@@ -148,7 +159,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(months, BigDecimal.valueOf(amount), ClientType.IP);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+        assertDeclied(loanResponseStatus);
     }
 
     @Test
