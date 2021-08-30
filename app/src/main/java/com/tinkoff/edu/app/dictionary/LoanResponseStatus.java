@@ -1,6 +1,6 @@
 package com.tinkoff.edu.app.dictionary;
 
 public enum
-LoanResponseStatusType {
+LoanResponseStatus {
     APPROVED, DECLINED, ERROR
 }

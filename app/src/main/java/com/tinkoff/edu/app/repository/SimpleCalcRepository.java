@@ -1,6 +1,6 @@
 package com.tinkoff.edu.app.repository;
 
-import com.tinkoff.edu.app.dictionary.LoanResponseStatusType;
+import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
@@ -14,11 +14,11 @@ public class SimpleCalcRepository implements LoanCalcRepository {
      * Процедура для сохранения id заявки
      *
      * @param loanRequest            - параметры заявки
-     * @param loanResponseStatusType - решение по заявке
+     * @param loanResponseStatus - решение по заявке
      * @return - LoanResponse - набор параметров (номер заявки + сама заявка + результат рассмотрения)
      */
     @Override
-    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatusType loanResponseStatusType) {
-        return new LoanResponse(++requestId, loanRequest, loanResponseStatusType);
+    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
+        return new LoanResponse(++requestId, loanRequest, loanResponseStatus);
     }
 }
