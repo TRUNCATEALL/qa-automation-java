@@ -98,7 +98,7 @@ public class LoanCalcTest {
         LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(9999), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.APPROVED, "Заявка не должна быть одобрена");
+        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.APPROVED, "Заявка должна быть одобрена");
     }
 
     @Test
