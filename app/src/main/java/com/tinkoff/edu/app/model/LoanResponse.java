@@ -1,6 +1,6 @@
 package com.tinkoff.edu.app.model;
 
-import com.tinkoff.edu.app.dictionary.LoanResponseStatusType;
+import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 
 /**
  * Loan response
@@ -8,9 +8,9 @@ import com.tinkoff.edu.app.dictionary.LoanResponseStatusType;
 public class LoanResponse {
     private final int requestId;
     private final LoanRequest loanRequest;
-    private final LoanResponseStatusType responseStatus;
+    private final LoanResponseStatus responseStatus;
 
-    public LoanResponse(int requestId, LoanRequest loanRequest, LoanResponseStatusType responseStatus) {
+    public LoanResponse(int requestId, LoanRequest loanRequest, LoanResponseStatus responseStatus) {
         this.requestId = requestId;
         this.loanRequest = loanRequest;
         this.responseStatus = responseStatus;
@@ -24,7 +24,7 @@ public class LoanResponse {
         return loanRequest;
     }
 
-    public LoanResponseStatusType getResponseStatus() {
+    public LoanResponseStatus getResponseStatus() {
         return responseStatus;
     }
 
