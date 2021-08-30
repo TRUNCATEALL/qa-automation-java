@@ -31,26 +31,7 @@ public class SimpleLoanCalcService implements LoanCalcService {
         if (requestMonths <= 0)
             throw new IllegalArgumentException("Срок кредита должен быть больше 0");
 
-        LoanResponseStatus loanResponseStatus = LoanResponseStatus.APPROVED;
-        switch (loanRequest.getClientType()) {
-            case PERSON:
-                if (requestAmount.compareTo(cornerAmount) > 0 && requestMonths > 12) {
-                    loanResponseStatus = LoanResponseStatus.DECLINED;
-                }
-                break;
-            case OOO:
-                if (requestAmount.compareTo(cornerAmount) > 0) {
-                    if (requestMonths >= 12) loanResponseStatus = LoanResponseStatus.DECLINED;
-                } else {
-                    loanResponseStatus = LoanResponseStatus.DECLINED;
-                }
-                break;
-            case IP:
-                loanResponseStatus = LoanResponseStatus.DECLINED;
-                break;
-            default:
-                throw new NullPointerException("Неизвестный тип клиента");
-        }
+        LoanResponseStatus loanResponseStatus = getResponseStatus(loanRequest.getClientType(), cornerAmount, requestAmount, requestMonths);
 
         return loanCalcRepository.save(loanRequest, loanResponseStatus);
     }

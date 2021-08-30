@@ -94,16 +94,24 @@ public class LoanCalcTest {
     }
 
     @Test
-    public void shouldGetApproveWhenClientPerson() {
-        LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(9999), ClientType.PERSON);
+    public void shouldGetDeclineWhenClientPersonAndMonthsLowerThenMax() {
+        LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(10001), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
-        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.APPROVED, "Заявка должна быть одобрена");
+        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
     }
 
     @Test
-    public void shouldGetApproveWhenClientPersonAndAmountMoreThenMax() {
-        LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(10001), ClientType.PERSON);
+    public void shouldGetDeclineWhenClientPersonAndAmountLowerThenMax() {
+        LoanRequest loanRequest = new LoanRequest(13, BigDecimal.valueOf(9999), ClientType.PERSON);
+        LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
+
+        Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.DECLINED, "Заявка не должна быть одобрена");
+    }
+
+    @Test
+    public void shouldGetApproveWhenClientPerson() {
+        LoanRequest loanRequest = new LoanRequest(11, BigDecimal.valueOf(9999), ClientType.PERSON);
         LoanResponseStatus loanResponseStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
         Assertions.assertEquals(loanResponseStatus, LoanResponseStatus.APPROVED, "Заявка должна быть одобрена");
