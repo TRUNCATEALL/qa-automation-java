@@ -16,17 +16,17 @@ public interface LoanCalcService {
     default LoanResponseStatus getResponseStatus(ClientType clientType, BigDecimal cornerAmount, BigDecimal amount, int months) {
         switch (clientType) {
             case PERSON:
-                return getReqStatusForPerson(cornerAmount, amount, months);
+                return getRespStatusForPerson(cornerAmount, amount, months);
             case OOO:
-                return getReqStatusForOoo(cornerAmount, amount, months);
+                return getRespStatusForOoo(cornerAmount, amount, months);
             case IP:
-                return getReqStatusForIp();
+                return getRespStatusForIp();
             default:
                 throw new NullPointerException("Неизвестный тип клиента");
         }
     }
 
-    default LoanResponseStatus getReqStatusForPerson(BigDecimal cornerAmount, BigDecimal amount, int months) {
+    default LoanResponseStatus getRespStatusForPerson(BigDecimal cornerAmount, BigDecimal amount, int months) {
         LoanResponseStatus loanResponseStatus = DECLINED;
 
         if (amount.compareTo(cornerAmount) <= 0 && months <= 12) {
@@ -35,7 +35,7 @@ public interface LoanCalcService {
         return loanResponseStatus;
     }
 
-    default LoanResponseStatus getReqStatusForOoo(BigDecimal cornerAmount, BigDecimal amount, int months) {
+    default LoanResponseStatus getRespStatusForOoo(BigDecimal cornerAmount, BigDecimal amount, int months) {
         LoanResponseStatus loanResponseStatus = DECLINED;
 
         if (amount.compareTo(cornerAmount) > 0 && months <= 12) {
@@ -44,7 +44,7 @@ public interface LoanCalcService {
         return loanResponseStatus;
     }
 
-    default LoanResponseStatus getReqStatusForIp() {
+    default LoanResponseStatus getRespStatusForIp() {
         return DECLINED;
     }
 }
