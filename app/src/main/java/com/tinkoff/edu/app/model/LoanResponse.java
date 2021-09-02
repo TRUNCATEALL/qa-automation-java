@@ -2,21 +2,23 @@ package com.tinkoff.edu.app.model;
 
 import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 
+import java.util.UUID;
+
 /**
  * Loan response
  */
 public class LoanResponse {
-    private final int requestId;
+    private final UUID requestId;
     private final LoanRequest loanRequest;
-    private final LoanResponseStatus responseStatus;
+    private LoanResponseStatus responseStatus;
 
-    public LoanResponse(int requestId, LoanRequest loanRequest, LoanResponseStatus responseStatus) {
+    public LoanResponse(UUID requestId, LoanRequest loanRequest, LoanResponseStatus responseStatus) {
         this.requestId = requestId;
         this.loanRequest = loanRequest;
         this.responseStatus = responseStatus;
     }
 
-    public int getRequestId() {
+    public UUID getRequestId() {
         return requestId;
     }
 
@@ -30,5 +32,9 @@ public class LoanResponse {
 
     public String toString() {
         return "requestId: " + this.requestId + "\nrequest: " + this.loanRequest + "\nresponseStatus: " + this.responseStatus;
+    }
+
+    public void setStatus(LoanResponseStatus responseStatus){
+        this.responseStatus = responseStatus;
     }
 }
