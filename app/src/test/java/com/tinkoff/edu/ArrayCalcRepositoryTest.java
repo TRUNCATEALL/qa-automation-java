@@ -51,7 +51,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldChangeResponseStatusByUUID() {
+    void shouldChangeStatusByUUID() {
         LoanRequest loanRequest = createRequestWithRandomParams(ClientType.OOO);
         LoanResponse loanResponse = loanCalcController.createRequest(loanRequest);
 
