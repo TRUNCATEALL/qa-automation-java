@@ -23,7 +23,7 @@ public class ArrayCalcRepositoryTest {
     ArrayCalcRepository arrayCalcRepository;
 
     @BeforeEach
-    public void generateRequest() {
+    public void prepareRequest() {
         arrayCalcRepository = new ArrayCalcRepository();
         LoanCalcService loanCalcService = new SimpleLoanCalcService(arrayCalcRepository);
         loanCalcController = new LoanCalcController(loanCalcService);
