@@ -16,13 +16,13 @@ public class ArrayCalcRepository implements LoanCalcRepository {
     private int currentIndex = 0;
 
     @Override
-    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
+    public UUID save(LoanRequest loanRequest) {
         if (currentIndex >= requestsArray.length)
             throw new IllegalStateException("The loan repository is full");
 
         requestsArray[currentIndex++] = loanRequest;
 
-        return new LoanResponse(UUID.randomUUID(), loanRequest, loanResponseStatus);
+        return UUID.randomUUID();
     }
 
     public ArrayCalcRepository() {
