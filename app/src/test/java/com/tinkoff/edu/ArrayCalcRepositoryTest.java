@@ -8,13 +8,12 @@ import com.tinkoff.edu.app.model.LoanResponse;
 import com.tinkoff.edu.app.repository.ArrayCalcRepository;
 import com.tinkoff.edu.app.service.LoanCalcService;
 import com.tinkoff.edu.app.service.SimpleLoanCalcService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 
-import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.*;
+import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.IN_PROGRESS;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ArrayCalcRepositoryTest {
@@ -23,7 +22,7 @@ public class ArrayCalcRepositoryTest {
     ArrayCalcRepository arrayCalcRepository;
 
     @BeforeEach
-    public void prepareRequest() {
+    public void prepare() {
         arrayCalcRepository = new ArrayCalcRepository();
         LoanCalcService loanCalcService = new SimpleLoanCalcService(arrayCalcRepository);
         loanCalcController = new LoanCalcController(loanCalcService);
@@ -37,15 +36,13 @@ public class ArrayCalcRepositoryTest {
 
     @Test
     void shouldErrorWhenRepositoryArrayOverflow() {
-        for (int i = 0; i < arrayCalcRepository.getRequestsArray().length; i++) {
+        for (int i = 0; i < arrayCalcRepository.getMaxCapacity(); i++) {
             LoanRequest loanRequest = new LoanRequest(applicantsName, 11, BigDecimal.valueOf(10001), ClientType.OOO);
-            LoanResponse loanResponse = loanCalcController.createRequest(loanRequest);
-            assertEquals(APPROVED,
-                    loanResponse.getResponseStatus(), "Некорректный статус.");
+            loanCalcController.createRequest(loanRequest);
         }
 
         LoanRequest loanRequest = new LoanRequest(applicantsName, 14, BigDecimal.valueOf(9999), ClientType.OOO);
-        ArrayIndexOutOfBoundsException e = Assertions.assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+        assertThrows(IllegalStateException.class, () -> {
             loanCalcController.createRequest(loanRequest);
         });
     }

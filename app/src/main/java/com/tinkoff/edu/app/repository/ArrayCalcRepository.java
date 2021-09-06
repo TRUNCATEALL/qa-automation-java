@@ -13,19 +13,14 @@ import java.util.UUID;
  */
 public class ArrayCalcRepository implements LoanCalcRepository {
     private LoanRequest[] requestsArray;
+    private int currentIndex = 0;
 
     @Override
     public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
-        if (Arrays.stream(requestsArray).noneMatch(Objects::isNull)) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        if (currentIndex >= requestsArray.length)
+            throw new IllegalStateException("The loan repository is full");
 
-        for (int i = 0; i < requestsArray.length; i++) {
-            if (requestsArray[i] == null) {
-                requestsArray[i] = loanRequest;
-                break;
-            }
-        }
+        requestsArray[currentIndex++] = loanRequest;
 
         return new LoanResponse(UUID.randomUUID(), loanRequest, loanResponseStatus);
     }
@@ -34,7 +29,7 @@ public class ArrayCalcRepository implements LoanCalcRepository {
         requestsArray = new LoanRequest[5];
     }
 
-    public LoanRequest[] getRequestsArray() {
-        return requestsArray;
+    public int getMaxCapacity() {
+        return requestsArray.length;
     }
 }
