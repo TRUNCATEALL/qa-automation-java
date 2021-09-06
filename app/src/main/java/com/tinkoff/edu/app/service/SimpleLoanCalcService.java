@@ -36,8 +36,9 @@ public class SimpleLoanCalcService implements LoanCalcService {
             throw new IllegalArgumentException("Срок кредита должен быть больше 0");
 
         LoanResponseStatus loanResponseStatus = getResponseStatus(loanRequest.getClientType(), cornerAmount, requestAmount, requestMonths);
+        LoanResponse loanResponse = new LoanResponse(loanCalcRepository.save(loanRequest), loanRequest, loanResponseStatus);
 
-        return loanCalcRepository.save(loanRequest, loanResponseStatus);
+        return loanResponse;
     }
 
     private LoanResponseStatus getResponseStatus(ClientType clientType, BigDecimal cornerAmount, BigDecimal amount, int months) {

@@ -1,24 +1,23 @@
 package com.tinkoff.edu.app.repository;
 
-import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 import com.tinkoff.edu.app.model.LoanRequest;
-import com.tinkoff.edu.app.model.LoanResponse;
+
+import java.util.UUID;
 
 /**
  * Loan repository
  */
 public class SimpleCalcRepository implements LoanCalcRepository {
-    private int requestId;
 
     /**
      * Процедура для сохранения id заявки
      *
-     * @param loanRequest            - параметры заявки
-     * @param loanResponseStatus - решение по заявке
-     * @return - LoanResponse - набор параметров (номер заявки + сама заявка + результат рассмотрения)
+     * @param loanRequest - параметры заявки
+     * @return - UUID - номер заявки
      */
-    @Override
-    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
-        return new LoanResponse(++requestId, loanRequest, loanResponseStatus);
+
+    public UUID save(LoanRequest loanRequest) {
+        //TODO: что-то будем делать с заявкой при сохранении в будущем
+        return UUID.randomUUID();
     }
 }
