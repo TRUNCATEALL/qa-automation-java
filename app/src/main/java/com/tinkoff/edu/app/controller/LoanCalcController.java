@@ -16,6 +16,9 @@ public class LoanCalcController {
     }
 
     public LoanResponse createRequest(LoanRequest loanRequest) {
+        if (loanRequest == null)
+            throw new NullPointerException("Данные по заявке отсутствуют");
+
         LoanCalcLogger.log();
         return loanCalcService.createRequest(loanRequest);
     }
