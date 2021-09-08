@@ -37,7 +37,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorWhenRepositoryArrayOverflow() {
+    void shouldThrowErrorWhenRepositoryArrayOverflow() {
         for (int i = 0; i < arrayCalcRepository.getMaxCapacity(); i++) {
             LoanRequest loanRequest = new LoanRequest(applicantsName, 11, BigDecimal.valueOf(10001), ClientType.OOO);
             loanCalcController.createRequest(loanRequest);
@@ -67,7 +67,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorWhenSendRequestWithBadName() {
+    void shouldThrowErrorWhenSendRequestWithBadName() {
         LoanRequest loanRequest = new LoanRequest("BadName-12345", 14, BigDecimal.valueOf(9999), ClientType.OOO);
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () -> {
             loanCalcController.createRequest(loanRequest);
@@ -77,7 +77,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorWhenSendRequestWithBadLengthName() {
+    void shouldThrowErrorWhenSendRequestWithBadLengthName() {
         String overloadName = Utils.generateStringFromAlphabetWithLength(101, "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz");
         Collection<String> badNames = List.of("BadName", overloadName);
 
@@ -92,7 +92,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorWhenSendRequestWithBadTerms() {
+    void shouldThrowErrorWhenSendRequestWithBadTerms() {
         Collection<Integer> badTerms = List.of(0, 101);
 
         for (Integer badTerm : badTerms) {
@@ -106,8 +106,9 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorWhenSendRequestWithBadAmount() {
-        Collection<BigDecimal> badAmounts = List.of(new BigDecimal(0.001), new BigDecimal(999_999.99).add(BigDecimal.ONE));
+    void shouldThrowErrorWhenSendRequestWithBadAmount() {
+        BigDecimal delta = new BigDecimal(0.01);
+        Collection<BigDecimal> badAmounts = List.of(new BigDecimal(0.01).subtract(delta), new BigDecimal(999_999.99).add(delta));
 
         for (BigDecimal badAmount : badAmounts) {
             LoanRequest loanRequest = new LoanRequest(applicantsName, 14, badAmount, ClientType.OOO);
@@ -120,7 +121,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorInRepoWhenRequestIsNull() {
+    void shouldThrowErrorInRepoWhenRequestIsNull() {
         NullPointerException e = assertThrows(NullPointerException.class, () -> {
             arrayCalcRepository.save(null);
         });
@@ -129,7 +130,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorInControllerWhenRequestIsNull() {
+    void shouldThrowErrorInControllerWhenRequestIsNull() {
         NullPointerException e = assertThrows(NullPointerException.class, () -> {
             loanCalcController.createRequest(null);
         });
@@ -138,7 +139,7 @@ public class ArrayCalcRepositoryTest {
     }
 
     @Test
-    void shouldErrorInServiceWhenRequestIsNull() {
+    void shouldThrowErrorInServiceWhenRequestIsNull() {
         LoanCalcService loanCalcService = new SimpleLoanCalcService(arrayCalcRepository);
 
         NullPointerException e = assertThrows(NullPointerException.class, () -> {
