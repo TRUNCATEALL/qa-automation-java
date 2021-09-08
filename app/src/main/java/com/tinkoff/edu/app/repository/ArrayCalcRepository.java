@@ -1,11 +1,7 @@
 package com.tinkoff.edu.app.repository;
 
-import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 import com.tinkoff.edu.app.model.LoanRequest;
-import com.tinkoff.edu.app.model.LoanResponse;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -17,6 +13,9 @@ public class ArrayCalcRepository implements LoanCalcRepository {
 
     @Override
     public UUID save(LoanRequest loanRequest) {
+        if (loanRequest == null)
+            throw new NullPointerException("Данные по заявке отсутствуют");
+
         if (currentIndex >= requestsArray.length)
             throw new IllegalStateException("The loan repository is full");
 

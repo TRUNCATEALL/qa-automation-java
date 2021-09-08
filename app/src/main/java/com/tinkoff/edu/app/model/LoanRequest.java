@@ -17,6 +17,10 @@ public class LoanRequest {
         this.clientType = clientType;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
     public ClientType getClientType() {
         return clientType;
     }

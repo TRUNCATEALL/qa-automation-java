@@ -1,5 +1,6 @@
 package com.tinkoff.edu.app.service;
 
+import com.tinkoff.edu.app.exceptions.BadRequestArguments;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 

@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class LoanCalcTest {
     private static LoanCalcController loanCalcController;
-    private final static String applicantsName = "Владимир Владимирович Тестировщик";
+    private final static String applicantsName = "Владимир-Владимирович-Тестировщик";
 
     @BeforeAll
     public static void generateRequest() {
@@ -56,7 +56,7 @@ public class LoanCalcTest {
         IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class, () -> {
             loanCalcController.createRequest(loanRequest);
         });
-        assertEquals(e.getMessage(), "Сумма кредита должна быть больше 0");
+        assertEquals(e.getMessage(), "Сумма кредита должна быть не менее 0.01 и не более 999 999.99");
     }
 
     @Test
@@ -66,7 +66,7 @@ public class LoanCalcTest {
         IllegalArgumentException e = Assertions.assertThrows(IllegalArgumentException.class, () -> {
             loanCalcController.createRequest(loanRequest);
         });
-        assertEquals(e.getMessage(), "Срок кредита должен быть больше 0");
+        assertEquals(e.getMessage(), "Срок кредита должен быть не менее 1 и не более 100 месяцев");
     }
 
     @Test
