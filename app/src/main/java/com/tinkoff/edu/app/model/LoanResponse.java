@@ -8,18 +8,18 @@ import java.util.UUID;
  * Loan response
  */
 public class LoanResponse {
-    private final UUID requestId;
+    private final UUID responseId;
     private final LoanRequest loanRequest;
     private LoanResponseStatus responseStatus;
 
-    public LoanResponse(UUID requestId, LoanRequest loanRequest, LoanResponseStatus responseStatus) {
-        this.requestId = requestId;
+    public LoanResponse(UUID responseId, LoanRequest loanRequest, LoanResponseStatus responseStatus) {
+        this.responseId = responseId;
         this.loanRequest = loanRequest;
         this.responseStatus = responseStatus;
     }
 
-    public UUID getRequestId() {
-        return requestId;
+    public UUID getResponseId() {
+        return responseId;
     }
 
     public LoanRequest getLoanRequest() {
@@ -31,7 +31,7 @@ public class LoanResponse {
     }
 
     public String toString() {
-        return "requestId: " + this.requestId + "\nrequest: " + this.loanRequest + "\nresponseStatus: " + this.responseStatus;
+        return "requestId: " + this.responseId + "\nrequest: " + this.loanRequest + "\nresponseStatus: " + this.responseStatus;
     }
 
     public void setStatus(LoanResponseStatus responseStatus){

@@ -1,6 +1,8 @@
 package com.tinkoff.edu.app.repository;
 
+import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 import com.tinkoff.edu.app.model.LoanRequest;
+import com.tinkoff.edu.app.model.LoanResponse;
 
 import java.util.UUID;
 
@@ -12,7 +14,7 @@ public class ArrayCalcRepository implements LoanCalcRepository {
     private int currentIndex = 0;
 
     @Override
-    public UUID save(LoanRequest loanRequest) {
+    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
         if (loanRequest == null)
             throw new NullPointerException("Данные по заявке отсутствуют");
 
@@ -21,7 +23,7 @@ public class ArrayCalcRepository implements LoanCalcRepository {
 
         requestsArray[currentIndex++] = loanRequest;
 
-        return UUID.randomUUID();
+        return new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
     }
 
     public ArrayCalcRepository() {

@@ -38,13 +38,12 @@ public class SimpleLoanCalcService implements LoanCalcService {
         }
 
         LoanResponseStatus loanResponseStatus = getResponseStatus(loanRequest.getClientType(), cornerAmount, requestAmount, requestMonths);
-        LoanResponse loanResponse = new LoanResponse(loanCalcRepository.save(loanRequest), loanRequest, loanResponseStatus);
 
-        return loanResponse;
+        return loanCalcRepository.save(loanRequest, loanResponseStatus);
     }
 
     private void validateRequestParams(String applicantsName, BigDecimal requestAmount, int requestMonths) throws BadRequestArguments {
-        if (requestAmount.compareTo(new BigDecimal(0.01)) < 0 || requestAmount.compareTo(new BigDecimal(999_999.99)) > 0)
+        if (requestAmount.compareTo(BigDecimal.valueOf(0.01)) < 0 || requestAmount.compareTo(BigDecimal.valueOf(999_999.99)) > 0)
             throw new BadRequestArguments("Сумма кредита должна быть не менее 0.01 и не более 999 999.99");
 
         if (requestMonths <= 0 || requestMonths > 100)
@@ -58,15 +57,18 @@ public class SimpleLoanCalcService implements LoanCalcService {
     }
 
     private LoanResponseStatus getResponseStatus(ClientType clientType, BigDecimal cornerAmount, BigDecimal amount, int months) {
+
+        if (clientType == null)
+            throw new NullPointerException("Неизвестный тип клиента");
+
         switch (clientType) {
+            default:
             case PERSON:
                 return getRespStatusForPerson(cornerAmount, amount, months);
             case OOO:
                 return getRespStatusForOoo(cornerAmount, amount, months);
             case IP:
                 return getRespStatusForIp();
-            default:
-                throw new NullPointerException("Неизвестный тип клиента");
         }
     }
 

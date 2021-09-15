@@ -1,8 +1,8 @@
 package com.tinkoff.edu.app.repository;
 
+import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 import com.tinkoff.edu.app.model.LoanRequest;
-
-import java.util.UUID;
+import com.tinkoff.edu.app.model.LoanResponse;
 
 /**
  * Loan repository
@@ -16,8 +16,8 @@ public class SimpleCalcRepository implements LoanCalcRepository {
      * @return - UUID - номер заявки
      */
 
-    public UUID save(LoanRequest loanRequest) {
+    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
         //TODO: что-то будем делать с заявкой при сохранении в будущем
-        return UUID.randomUUID();
+        return new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
     }
 }

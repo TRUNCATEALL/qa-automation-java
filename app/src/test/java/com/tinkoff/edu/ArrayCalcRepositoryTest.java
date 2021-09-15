@@ -123,7 +123,7 @@ public class ArrayCalcRepositoryTest {
     @Test
     void shouldThrowErrorInRepoWhenRequestIsNull() {
         NullPointerException e = assertThrows(NullPointerException.class, () -> {
-            arrayCalcRepository.save(null);
+            arrayCalcRepository.save(null, null);
         });
 
         assertEquals("Данные по заявке отсутствуют", e.getMessage());
