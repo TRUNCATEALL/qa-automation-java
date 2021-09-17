@@ -10,8 +10,8 @@ import java.util.UUID;
 
 public class HashMapLoanCalcRepository implements LoanCalcRepository {
 
-    private final Map<UUID, LoanRequest> requestsMap = new HashMap<>();;
-    private final Map<UUID, LoanResponse> responsesMap = new HashMap<>();;
+    private final Map<UUID, LoanRequest> requestsMap = new HashMap<>();
+    private final Map<UUID, LoanResponse> responsesMap = new HashMap<>();
 
     public Map<UUID, LoanRequest> getRequests() {
         return Collections.unmodifiableMap(requestsMap);
@@ -27,12 +27,11 @@ public class HashMapLoanCalcRepository implements LoanCalcRepository {
         if (loanRequest == null)
             throw new NullPointerException("Данные по заявке отсутствуют");
 
-        try {
-            requestsMap.put(loanRequest.getRequestId(), loanRequest);
-            responsesMap.put(loanResponse.getResponseId(), loanResponse);
-        } catch (Exception e) {
-            return false;
-        }
+        if (loanResponse == null)
+            throw new NullPointerException("Ответ по заявке не был сформирован");
+
+        requestsMap.put(loanRequest.getRequestId(), loanRequest);
+        responsesMap.put(loanResponse.getResponseId(), loanResponse);
         return true;
     }
 }

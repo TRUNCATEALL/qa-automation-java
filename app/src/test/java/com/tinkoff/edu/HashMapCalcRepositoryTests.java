@@ -23,8 +23,7 @@ import java.util.stream.Stream;
 import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.APPROVED;
 import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.DECLINED;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HashMapCalcRepositoryTests {
     private final static String applicantsName = "Владимир-Владимирович-Тестировщик";
@@ -148,6 +147,17 @@ public class HashMapCalcRepositoryTests {
         });
 
         assertEquals("Данные по заявке отсутствуют", e.getMessage());
+    }
+
+    @Test
+    void shouldThrowErrorInRepoWhenResponseIsNull() {
+        LoanRequest loanRequest = createRequestWithRandomParams(ClientType.PERSON);
+
+        NullPointerException e = assertThrows(NullPointerException.class, () -> {
+            hashMapLoanCalcRepository.save(loanRequest, null);
+        });
+
+        assertEquals("Ответ по заявке не был сформирован", e.getMessage());
     }
 
     private LoanRequest createRequestWithRandomParams(ClientType clientType) {
