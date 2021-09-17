@@ -1,6 +1,5 @@
 package com.tinkoff.edu.app.repository;
 
-import com.tinkoff.edu.app.dictionary.LoanResponseStatus;
 import com.tinkoff.edu.app.model.LoanRequest;
 import com.tinkoff.edu.app.model.LoanResponse;
 
@@ -11,13 +10,8 @@ import java.util.UUID;
 
 public class HashMapLoanCalcRepository implements LoanCalcRepository {
 
-    private final HashMap<UUID, LoanRequest> requestsMap;
-    private final HashMap<UUID, LoanResponse> responsesMap;
-
-    public HashMapLoanCalcRepository() {
-        requestsMap = new HashMap<>();
-        responsesMap = new HashMap<>();
-    }
+    private final Map<UUID, LoanRequest> requestsMap = new HashMap<>();;
+    private final Map<UUID, LoanResponse> responsesMap = new HashMap<>();;
 
     public Map<UUID, LoanRequest> getRequests() {
         return Collections.unmodifiableMap(requestsMap);
@@ -28,16 +22,17 @@ public class HashMapLoanCalcRepository implements LoanCalcRepository {
     }
 
     @Override
-    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
+    public boolean save(LoanRequest loanRequest, LoanResponse loanResponse) {
+
         if (loanRequest == null)
             throw new NullPointerException("Данные по заявке отсутствуют");
 
-        UUID nextResponseId = UUID.randomUUID();
-        LoanResponse loanResponse = new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
-
-        requestsMap.put(loanRequest.getRequestId(), loanRequest);
-        responsesMap.put(nextResponseId, loanResponse);
-
-        return loanResponse;
+        try {
+            requestsMap.put(loanRequest.getRequestId(), loanRequest);
+            responsesMap.put(loanResponse.getResponseId(), loanResponse);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

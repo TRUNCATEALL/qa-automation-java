@@ -14,7 +14,7 @@ public class ArrayCalcRepository implements LoanCalcRepository {
     private int currentIndex = 0;
 
     @Override
-    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
+    public boolean save(LoanRequest loanRequest, LoanResponse loanResponse) {
         if (loanRequest == null)
             throw new NullPointerException("Данные по заявке отсутствуют");
 
@@ -23,7 +23,7 @@ public class ArrayCalcRepository implements LoanCalcRepository {
 
         requestsArray[currentIndex++] = loanRequest;
 
-        return new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
+        return true;
     }
 
     public ArrayCalcRepository() {

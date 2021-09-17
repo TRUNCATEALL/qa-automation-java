@@ -38,8 +38,10 @@ public class SimpleLoanCalcService implements LoanCalcService {
         }
 
         LoanResponseStatus loanResponseStatus = getResponseStatus(loanRequest.getClientType(), cornerAmount, requestAmount, requestMonths);
+        LoanResponse loanResponse = new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
+        loanCalcRepository.save(loanRequest, loanResponse);
 
-        return loanCalcRepository.save(loanRequest, loanResponseStatus);
+        return loanResponse;
     }
 
     private void validateRequestParams(String applicantsName, BigDecimal requestAmount, int requestMonths) throws BadRequestArguments {
@@ -62,12 +64,12 @@ public class SimpleLoanCalcService implements LoanCalcService {
             throw new NullPointerException("Неизвестный тип клиента");
 
         switch (clientType) {
-            default:
             case PERSON:
                 return getRespStatusForPerson(cornerAmount, amount, months);
             case OOO:
                 return getRespStatusForOoo(cornerAmount, amount, months);
             case IP:
+            default:
                 return getRespStatusForIp();
         }
     }

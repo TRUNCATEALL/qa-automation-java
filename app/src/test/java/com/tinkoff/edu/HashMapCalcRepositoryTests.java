@@ -27,56 +27,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HashMapCalcRepositoryTests {
-    private static LoanCalcController loanCalcController;
     private final static String applicantsName = "Владимир-Владимирович-Тестировщик";
+    private static LoanCalcController loanCalcController;
     HashMapLoanCalcRepository hashMapLoanCalcRepository;
-
-    private void assertApproved(LoanResponseStatus status) {
-        assertEquals(APPROVED, status, "Заявка должна быть одобрена");
-    }
-
-    private void assertDeclied(LoanResponseStatus status) {
-        assertEquals(DECLINED, status, "Заявка не должна быть одобрена");
-    }
-
-    static Stream<Arguments> positivePersonProvider() {
-        return Stream.of(Arguments.arguments(BigDecimal.valueOf(9999), 11),
-                Arguments.arguments(BigDecimal.valueOf(10000), 12));
-    }
-
-    static Stream<Arguments> negativePersonProvider() {
-        return Stream.of(Arguments.arguments(BigDecimal.valueOf(999999.99), 100),
-                Arguments.arguments(BigDecimal.valueOf(10001), 13),
-                Arguments.arguments(BigDecimal.valueOf(10001), 11),
-                Arguments.arguments(BigDecimal.valueOf(9999), 13));
-    }
-
-    static Stream<Arguments> positiveOooProvider() {
-        return Stream.of(Arguments.arguments(BigDecimal.valueOf(10001), 12),
-                Arguments.arguments(BigDecimal.valueOf(99999), 1));
-    }
-
-    static Stream<Arguments> negativeOooProvider() {
-        return Stream.of(Arguments.arguments(BigDecimal.valueOf(10001), 13),
-                Arguments.arguments(BigDecimal.valueOf(9999), 12),
-                Arguments.arguments(BigDecimal.valueOf(9999), 1));
-    }
-
-    static Stream<Arguments> negativeIpProvider() {
-        int amount = Utils.randomInt(0, 10000);
-        int months = Utils.randomInt(1, 12);
-
-        return Stream.of(Arguments.arguments(BigDecimal.valueOf(10000), 12),
-                Arguments.arguments(BigDecimal.valueOf(9999), 11),
-                Arguments.arguments(BigDecimal.valueOf(10001), 13),
-                Arguments.arguments(BigDecimal.valueOf(amount), months));
-    }
-
-    private LoanRequest createRequestWithRandomParams(ClientType clientType) {
-        int amount = Utils.randomInt(0, 10000);
-        int month = Utils.randomInt(1, 12);
-        return new LoanRequest(applicantsName, month, BigDecimal.valueOf(amount), clientType);
-    }
 
     @BeforeEach
     public void prepare() {
@@ -86,59 +39,86 @@ public class HashMapCalcRepositoryTests {
     }
 
     @ParameterizedTest
-    @MethodSource("positivePersonProvider")
+    @MethodSource("getPersonsLoanParametersForPositiveResponse")
     void shouldGetApproveWhenClientPerson(BigDecimal amount, int term) {
         LoanRequest loanRequest = new LoanRequest(applicantsName, term, amount, ClientType.PERSON);
 
-        LoanResponseStatus actualStatus = loanCalcController.
-                createRequest(loanRequest).getResponseStatus();
+        LoanResponseStatus actualStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
         assertApproved(actualStatus);
     }
 
+    private static Stream<Arguments> getPersonsLoanParametersForPositiveResponse() {
+        return Stream.of(Arguments.arguments(BigDecimal.valueOf(9999), 11),
+                Arguments.arguments(BigDecimal.valueOf(10000), 12));
+    }
+
     @ParameterizedTest
-    @MethodSource("negativePersonProvider")
+    @MethodSource("getPersonsLoanParametersForNegativeResponse")
     void shouldGetDeclineWhenClientPerson(BigDecimal amount, int term) {
         LoanRequest loanRequest = new LoanRequest(applicantsName, term, amount, ClientType.PERSON);
 
-        LoanResponseStatus actualStatus = loanCalcController.
-                createRequest(loanRequest).getResponseStatus();
+        LoanResponseStatus actualStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
         assertDeclied(actualStatus);
     }
 
+    private static Stream<Arguments> getPersonsLoanParametersForNegativeResponse() {
+        return Stream.of(Arguments.arguments(BigDecimal.valueOf(999999.99), 100),
+                Arguments.arguments(BigDecimal.valueOf(10001), 13),
+                Arguments.arguments(BigDecimal.valueOf(10001), 11),
+                Arguments.arguments(BigDecimal.valueOf(9999), 13));
+    }
 
     @ParameterizedTest
-    @MethodSource("positiveOooProvider")
+    @MethodSource("getOooLoanParametersForPositiveResponse")
     void shouldGetApproveWhenClientOoo(BigDecimal amount, int term) {
         LoanRequest loanRequest = new LoanRequest(applicantsName, term, amount, ClientType.OOO);
 
-        LoanResponseStatus actualStatus = loanCalcController.
-                createRequest(loanRequest).getResponseStatus();
+        LoanResponseStatus actualStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
         assertApproved(actualStatus);
     }
 
+    private static Stream<Arguments> getOooLoanParametersForPositiveResponse() {
+        return Stream.of(Arguments.arguments(BigDecimal.valueOf(10001), 12),
+                Arguments.arguments(BigDecimal.valueOf(99999), 1));
+    }
+
     @ParameterizedTest
-    @MethodSource("negativeOooProvider")
+    @MethodSource("getOooLoanParametersForNegativeResponse")
     void shouldGetDeclineWhenClientOoo(BigDecimal amount, int term) {
         LoanRequest loanRequest = new LoanRequest(applicantsName, term, amount, ClientType.OOO);
 
-        LoanResponseStatus actualStatus = loanCalcController.
-                createRequest(loanRequest).getResponseStatus();
+        LoanResponseStatus actualStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
         assertDeclied(actualStatus);
     }
 
+    private static Stream<Arguments> getOooLoanParametersForNegativeResponse() {
+        return Stream.of(Arguments.arguments(BigDecimal.valueOf(10001), 13),
+                Arguments.arguments(BigDecimal.valueOf(9999), 12),
+                Arguments.arguments(BigDecimal.valueOf(9999), 1));
+    }
+
     @ParameterizedTest
-    @MethodSource("negativeIpProvider")
+    @MethodSource("getIpLoanParametersForNegativeResponse")
     void shouldGetDeclineWhenClientIp(BigDecimal amount, int term) {
         LoanRequest loanRequest = new LoanRequest(applicantsName, term, amount, ClientType.IP);
 
-        LoanResponseStatus actualStatus = loanCalcController.
-                createRequest(loanRequest).getResponseStatus();
+        LoanResponseStatus actualStatus = loanCalcController.createRequest(loanRequest).getResponseStatus();
 
         assertDeclied(actualStatus);
+    }
+
+    private static Stream<Arguments> getIpLoanParametersForNegativeResponse() {
+        int amount = Utils.randomInt(0, 10000);
+        int months = Utils.randomInt(1, 12);
+
+        return Stream.of(Arguments.arguments(BigDecimal.valueOf(10000), 12),
+                Arguments.arguments(BigDecimal.valueOf(9999), 11),
+                Arguments.arguments(BigDecimal.valueOf(10001), 13),
+                Arguments.arguments(BigDecimal.valueOf(amount), months));
     }
 
     @Test
@@ -168,5 +148,19 @@ public class HashMapCalcRepositoryTests {
         });
 
         assertEquals("Данные по заявке отсутствуют", e.getMessage());
+    }
+
+    private LoanRequest createRequestWithRandomParams(ClientType clientType) {
+        int amount = Utils.randomInt(0, 10000);
+        int month = Utils.randomInt(1, 12);
+        return new LoanRequest(applicantsName, month, BigDecimal.valueOf(amount), clientType);
+    }
+
+    private void assertApproved(LoanResponseStatus status) {
+        assertEquals(APPROVED, status, "Заявка должна быть одобрена");
+    }
+
+    private void assertDeclied(LoanResponseStatus status) {
+        assertEquals(DECLINED, status, "Заявка не должна быть одобрена");
     }
 }

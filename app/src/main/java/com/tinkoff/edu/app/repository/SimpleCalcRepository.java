@@ -16,8 +16,8 @@ public class SimpleCalcRepository implements LoanCalcRepository {
      * @return - UUID - номер заявки
      */
 
-    public LoanResponse save(LoanRequest loanRequest, LoanResponseStatus loanResponseStatus) {
+    public boolean save(LoanRequest loanRequest, LoanResponse loanResponse) {
         //TODO: что-то будем делать с заявкой при сохранении в будущем
-        return new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
+        return true;
     }
 }

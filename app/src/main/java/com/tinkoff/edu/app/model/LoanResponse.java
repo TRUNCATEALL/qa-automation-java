@@ -8,7 +8,7 @@ import java.util.UUID;
  * Loan response
  */
 public class LoanResponse {
-    private final UUID responseId;
+    private UUID responseId;
     private final LoanRequest loanRequest;
     private LoanResponseStatus responseStatus;
 
@@ -16,6 +16,7 @@ public class LoanResponse {
         this.responseId = responseId;
         this.loanRequest = loanRequest;
         this.responseStatus = responseStatus;
+        this.responseId = UUID.randomUUID();
     }
 
     public UUID getResponseId() {
