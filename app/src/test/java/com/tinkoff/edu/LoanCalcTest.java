@@ -139,7 +139,7 @@ public class LoanCalcTest {
     public void shouldGetErrorWhenUnknownClientType() {
         int amount = Utils.randomInt(0, 10000);
         int months = Utils.randomInt(1, 12);
-        LoanRequest loanRequest = new LoanRequest(applicantsName, months, BigDecimal.valueOf(amount), ClientType.OAO);
+        LoanRequest loanRequest = new LoanRequest(applicantsName, months, BigDecimal.valueOf(amount), null);
 
         NullPointerException e = Assertions.assertThrows(NullPointerException.class, () -> {
             loanCalcController.createRequest(loanRequest);
