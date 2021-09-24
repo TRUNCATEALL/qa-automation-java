@@ -22,7 +22,7 @@ import static com.tinkoff.edu.app.dictionary.LoanResponseStatus.DECLINED;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class FileCalcRepositoryTest {
+public class FileLoanCalcRepositoryTest {
 
 
     private final static String applicantsName = "Владимир-Владимирович-Тестировщик";
