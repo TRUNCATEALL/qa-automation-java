@@ -27,7 +27,7 @@ public class FileLoanCalcRepositoryTest {
 
     private final static String applicantsName = "Владимир-Владимирович-Тестировщик";
     private static LoanCalcController loanCalcController;
-    FileLoanCalcRepository fileLoanCalcRepository;
+    private FileLoanCalcRepository fileLoanCalcRepository;
 
     @BeforeEach
     public void prepare() {
