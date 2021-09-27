@@ -9,12 +9,11 @@ import java.util.UUID;
  */
 public class LoanResponse {
     private UUID responseId;
-    private final LoanRequest loanRequest;
+    private final UUID requestId;
     private LoanResponseStatus responseStatus;
 
-    public LoanResponse(UUID responseId, LoanRequest loanRequest, LoanResponseStatus responseStatus) {
-        this.responseId = responseId;
-        this.loanRequest = loanRequest;
+    public LoanResponse(UUID requestId, LoanResponseStatus responseStatus) {
+        this.requestId = requestId;
         this.responseStatus = responseStatus;
         this.responseId = UUID.randomUUID();
     }
@@ -23,8 +22,8 @@ public class LoanResponse {
         return responseId;
     }
 
-    public LoanRequest getLoanRequest() {
-        return loanRequest;
+    public UUID getRequestId() {
+        return requestId;
     }
 
     public LoanResponseStatus getResponseStatus() {
@@ -32,7 +31,7 @@ public class LoanResponse {
     }
 
     public String toString() {
-        return "requestId: " + this.responseId + "\nrequest: " + this.loanRequest + "\nresponseStatus: " + this.responseStatus;
+        return this.responseId + "," + this.requestId + "," + this.responseStatus;
     }
 
     public void setStatus(LoanResponseStatus responseStatus){

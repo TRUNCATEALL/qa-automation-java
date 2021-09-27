@@ -38,8 +38,11 @@ public class SimpleLoanCalcService implements LoanCalcService {
         }
 
         LoanResponseStatus loanResponseStatus = getResponseStatus(loanRequest.getClientType(), cornerAmount, requestAmount, requestMonths);
-        LoanResponse loanResponse = new LoanResponse(loanRequest.getRequestId(), loanRequest, loanResponseStatus);
-        loanCalcRepository.save(loanRequest, loanResponse);
+        LoanResponse loanResponse = new LoanResponse(loanRequest.getRequestId(), loanResponseStatus);
+        boolean isSaved = loanCalcRepository.save(loanRequest, loanResponse);
+
+        if (!isSaved)
+            throw new IllegalStateException("Сохранение не успешно");
 
         return loanResponse;
     }
